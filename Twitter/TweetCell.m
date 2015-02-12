@@ -12,15 +12,13 @@
 
 @interface TweetCell()
 
-@property (weak, nonatomic) IBOutlet UIImageView *posterImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *screenLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tweetLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-
-- (IBAction)onReplyTap:(id)sender;
-- (IBAction)onRetweetTap:(id)sender;
-- (IBAction)onFavoriteTap:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *retweetCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *favoriteCountLabel;
 
 @end
 
@@ -30,6 +28,8 @@
     // Initialization code
     
     self.tweetLabel.preferredMaxLayoutWidth = self.tweetLabel.frame.size.width;
+    self.profileImageView.layer.cornerRadius = 3;
+    self.profileImageView.clipsToBounds = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -41,28 +41,35 @@
 - (void)setTweet:(Tweet *)tweet {
     _tweet = tweet;
     
-    [self.posterImageView setImageWithURL:[NSURL URLWithString:self.tweet.user.profileImageUrl]];
+    [self.profileImageView setImageWithURL:[NSURL URLWithString:self.tweet.user.profileImageUrl]];
     self.nameLabel.text = self.tweet.user.name;
     self.screenLabel.text = [NSString stringWithFormat:@"@%@", self.tweet.user.screenName];
     self.tweetLabel.text = self.tweet.text;
     self.timeLabel.text = [self.tweet.createdAt timeAgo];
+    self.retweetCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.retweetCount];
+    self.favoriteCountLabel.text = [NSString stringWithFormat:@"%ld", self.tweet.favoritesCount];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
     self.tweetLabel.preferredMaxLayoutWidth = self.tweetLabel.frame.size.width;
-}
+    self.profileImageView.layer.cornerRadius = 3;
+    self.profileImageView.clipsToBounds = YES;
 
+}
 
 - (IBAction)onReplyTap:(id)sender {
-    
+    NSLog(@"Tap on reply button");
+    [self.delegate tweetCell:self didPressButton:1];
 }
-
 - (IBAction)onRetweetTap:(id)sender {
+    NSLog(@"Tap on retweet button");
+    [self.delegate tweetCell:self didPressButton:2];
 }
-
 - (IBAction)onFavoriteTap:(id)sender {
+        NSLog(@"Tap on favorite button");
+    [self.delegate tweetCell:self didPressButton:3];
 }
 
 @end

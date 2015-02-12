@@ -12,7 +12,7 @@
 @class TweetCell;
 
 @protocol TweetCellDelegate <NSObject>
-
+- (void)tweetCell:(TweetCell *)cell didPressButton:(NSInteger)buttonId;
 @end
 
 @interface TweetCell : UITableViewCell

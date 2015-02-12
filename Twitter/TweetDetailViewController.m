@@ -41,6 +41,9 @@
     //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Reply" style:UIBarButtonItemStylePlain target:self action:@selector(onReply)];
     
     [self.profileImageView setImageWithURL:[NSURL URLWithString:self.tweet.user.profileImageUrl]];
+    self.profileImageView.layer.cornerRadius = 3;
+    self.profileImageView.clipsToBounds = YES;
+
     self.nameLabel.text = self.tweet.user.name;
     self.screenNameLabel.text = self.tweet.user.screenName;
     self.tweetLabel.text = self.tweet.text;

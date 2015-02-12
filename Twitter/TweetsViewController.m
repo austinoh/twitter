@@ -14,7 +14,7 @@
 #import "TweetDetailViewController.h"
 #import "TweetComposeViewController.h"
 
-@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -75,6 +75,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     cell.tweet = self.tweets[indexPath.row];
+    cell.delegate = self;
 
     return cell;
 }
@@ -100,7 +101,7 @@
     TweetDetailViewController *vc = [[TweetDetailViewController alloc] init];
     
     vc.tweet = self.tweets[indexPath.row];
-    
+
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -127,11 +128,35 @@
     [self.refreshControl endRefreshing];
 }
 
+#pragma mark - new tweet methods
+
 - (void)onNewTweet {
     TweetComposeViewController *vc = [[TweetComposeViewController alloc] init];
     vc.replyTweet = nil;
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
     [self.navigationController presentViewController:nvc animated:YES completion:nil];
+}
+
+#pragma mark - TweetCellDelegate methods
+
+- (void)tweetCell:(TweetCell *)cell didPressButton:(NSInteger)buttonID {
+    switch (buttonID) {
+        case 1: { // reply tap
+            TweetComposeViewController *vc = [[TweetComposeViewController alloc] init];
+            vc.replyTweet = cell.tweet;
+            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+            [self.navigationController presentViewController:nvc animated:YES completion:nil];
+            break;
+        }
+        case 2: { // retweet tap
+            break;
+        }
+        case 3: { // favorite tap
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 @end

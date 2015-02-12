@@ -67,7 +67,7 @@
                         <constraint firstAttribute="height" constant="4" id="76J-Be-flz"/>
                     </constraints>
                 </view>
-                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5eA-3F-iF7">
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5eA-3F-iF7">
                     <rect key="frame" x="8" y="198" width="584" height="4"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -75,7 +75,7 @@
                         <constraint firstAttribute="height" constant="4" id="tng-C4-XH7"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wyH-La-8Bq" userLabel="Retweet Button">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wyH-La-8Bq" userLabel="Retweet Button">
                     <rect key="frame" x="289" y="218" width="22" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="1ID-Un-llX"/>
@@ -89,7 +89,7 @@
                         <action selector="onRetweet:" destination="-1" eventType="touchUpInside" id="YTm-1o-Aze"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4U9-Pr-1Pp" userLabel="Favor Button">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4U9-Pr-1Pp" userLabel="Favor Button">
                     <rect key="frame" x="562" y="218" width="22" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="22" id="4AG-Pr-XXM"/>
@@ -104,7 +104,7 @@
                         <action selector="onFavorite:" destination="-1" eventType="touchUpInside" id="pQ3-VY-Ked"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tYZ-NL-XNh" userLabel="Reply Button">
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tYZ-NL-XNh" userLabel="Reply Button">
                     <rect key="frame" x="16" y="218" width="22" height="22"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="22" id="aV5-Ar-cDd"/>

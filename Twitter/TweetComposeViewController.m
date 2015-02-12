@@ -16,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *screenNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UITextView *tweetText;
-@property (weak, nonatomic) IBOutlet UILabel *textCounterLabel;
 
 @end
 
@@ -30,12 +29,15 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(onCancel)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tweet" style:UIBarButtonItemStylePlain target:self action:@selector(onSendTweet)];
     
-    self.textCounterLabel.text = @"140";
+    self.navigationItem.title = @"140";
     
     self.nameLabel.text = [User currentUser].name;
     self.screenNameLabel.text = [NSString stringWithFormat:@"@%@", [User currentUser].screenName];
     [self.profileImageView setImageWithURL:[NSURL URLWithString:[User currentUser].profileImageUrl]];
+    self.profileImageView.layer.cornerRadius = 3;
+    self.profileImageView.clipsToBounds = YES;
 
+    
     self.tweetText.delegate = self;
     
     if (self.replyTweet) {
@@ -52,7 +54,7 @@
 
 - (void)textViewDidChange:(UITextView *)textView {
     NSInteger charCounter = 140 - [self.tweetText.text length];
-    self.textCounterLabel.text = [NSString stringWithFormat:@"%ld", charCounter];
+    self.navigationItem.title = [NSString stringWithFormat:@"%ld", charCounter];
 }
 
 #pragma mark - Private methods
