@@ -32,12 +32,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    User *user = [User currentUser];
+    User *user = self.user ? self.user : [User currentUser];
     
-    // setup navigation bar items
-    self.navigationItem.title = user.name;
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
+    if (!self.user) {
+
+        UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out" style:UIBarButtonItemStylePlain target:self action:@selector(onLogout)];
+        self.navigationItem.leftBarButtonItem = leftBarButton;
+        
+        UILabel *navLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,0, 300, 40)];
+        navLabel.text = user.name;
+        navLabel.textAlignment = NSTextAlignmentCenter;
+        navLabel.textColor = [UIColor whiteColor];
+        navLabel.font = [UIFont boldSystemFontOfSize:17.0f];    // default font for consistency
+        [navLabel setUserInteractionEnabled:YES];
+        self.navigationItem.titleView = navLabel;
+    } else {
+        self.navigationItem.title = user.name;
+    }
+
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStylePlain target:self action:@selector(onNewTweet)];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ProfileCell" bundle:nil] forCellReuseIdentifier:@"ProfileCell"];
@@ -67,8 +79,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0 ) {
         ProfileCell *profileCell = [tableView dequeueReusableCellWithIdentifier:@"ProfileCell"];
-        User *user = [User currentUser];
 
+        User *user;
+        
+        if (self.user) {
+            user = self.user;
+        } else {
+            user = [User currentUser];
+        }
+        
         [profileCell setUser:user];
         
         return profileCell;
@@ -79,7 +98,6 @@
         
         // if data for the last cell is requested, then obtain more data
         if (indexPath.row == self.tweets.count - 1) {
-            NSLog(@"End of list reached...");
             [self getMoreTweets];
         }
         
@@ -164,7 +182,7 @@
 }
 
 - (void)onRefresh {
-    [[TwitterClient sharedInstance] userTimelineWithParams:nil completion:^(NSArray *tweets, NSError *error) {
+    [[TwitterClient sharedInstance] userTimelineWithParams:nil user:self.user completion:^(NSArray *tweets, NSError *error) {
         self.tweets = tweets;
         [self.tableView reloadData];
     }];
@@ -179,7 +197,7 @@
     if (!maxIdStr) {
         return;
     }
-    [[TwitterClient sharedInstance] userTimelineWithParams:@{ @"max_id": maxIdStr} completion:^(NSArray *tweets, NSError *error) {
+    [[TwitterClient sharedInstance] userTimelineWithParams:@{ @"max_id": maxIdStr} user:self.user completion:^(NSArray *tweets, NSError *error) {
         // reload only if there is more data
         if (error) {
         } else if (tweets.count > 0) {
@@ -196,6 +214,27 @@
             NSLog(@"No more tweets retrieved");
         }
     }];
+}
+
+- (void)onProfile:(User *)user {
+
+    NSString *profileScreenName = self.user ? self.user.screenName : [[User currentUser] screenName];
+
+    if ([user.screenName isEqualToString:profileScreenName]) {
+
+        CAKeyframeAnimation * anim = [ CAKeyframeAnimation animationWithKeyPath:@"transform" ] ;
+        anim.values = @[ [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(-5.0f, 0.0f, 0.0f) ], [ NSValue valueWithCATransform3D:CATransform3DMakeTranslation(5.0f, 0.0f, 0.0f) ] ] ;
+        anim.autoreverses = YES ;
+        anim.repeatCount = 2.0f ;
+        anim.duration = 0.07f ;
+        
+        [self.view.layer addAnimation:anim forKey:nil];
+        return;
+    }
+    
+    ProfileViewController *pvc = [[ProfileViewController alloc] init];
+    [pvc setUser:user];
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

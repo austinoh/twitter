@@ -68,8 +68,13 @@
     [self.delegate tweetCell:self didPressButton:2];
 }
 - (IBAction)onFavoriteTap:(id)sender {
-        NSLog(@"Tap on favorite button");
+    NSLog(@"Tap on favorite button");
     [self.delegate tweetCell:self didPressButton:3];
 }
+
+- (IBAction)onProfile:(id)sender {
+    [self.delegate onProfile:_tweet.user];
+}
+
 
 @end

@@ -13,6 +13,7 @@
 
 @protocol TweetCellDelegate <NSObject>
 - (void)tweetCell:(TweetCell *)cell didPressButton:(NSInteger)buttonId;
+- (void)onProfile:(User *)user;
 @end
 
 @interface TweetCell : UITableViewCell

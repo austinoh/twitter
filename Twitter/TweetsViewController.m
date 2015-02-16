@@ -13,6 +13,7 @@
 #import "TweetCell.h"
 #import "TweetDetailViewController.h"
 #import "TweetComposeViewController.h"
+#import "ProfileViewController.h"
 
 @interface TweetsViewController () <UITableViewDataSource, UITableViewDelegate, TweetCellDelegate>
 
@@ -158,6 +159,12 @@
         default:
             break;
     }
+}
+
+- (void)onProfile:(User *)user {
+    ProfileViewController *pvc = [[ProfileViewController alloc] init];
+    [pvc setUser:user];
+    [self.navigationController pushViewController:pvc animated:YES];
 }
 
 @end

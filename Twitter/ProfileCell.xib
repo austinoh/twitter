@@ -62,7 +62,7 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lby-7C-HBe" userLabel="Banner Image View">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lby-7C-HBe" userLabel="Banner Image View">
                         <rect key="frame" x="0.0" y="0.0" width="411" height="80"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="80" id="mDZ-i8-qAM"/>
